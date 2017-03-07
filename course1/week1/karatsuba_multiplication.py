@@ -4,51 +4,47 @@ import timeit
 #input = raw_input('Enter any two integer number separated by space')
 #input_list = input.split()
 #input_list = ['3141592653589793238462643383279502884197169399375105820974944592','2718281828459045235360287471352662497757247093699959574966967627']
-input_list = ['1234','5678']
-x = input_list[0]
-y = input_list[1]
-#count the number of digit in x
+import math
 
-n_x = len(x)
-n_y = len(y)
-if n_x<=1 or n_y<=1:
-    step5 = int(x)*int(y)
-else:
-    #split the x, y by n/2
-    a = x[:n_x/2]
-    b = x[n_x/2:]
-    c = y[:n_x/2]
-    d = y[n_x/2:]
-    #print a,b,c,d
-    # step 1
-    a = int(a)
-    b = int(b)
-    c = int(c)
-    d = int(d)
-    start = timeit.default_timer()
-    step1 = a*c
-    step2 = b*d
-    step3 = (a+b)*(c+d)
-    step4 = step3-step2-step1
-    step5 = step1*10**(n_x)+step4*10**(n_x/2)+step2
-    stop = timeit.default_timer()
-    print stop-start
-print step5
+class karatsuba:
+
+	def _init__(self):
+		print "Karatsuba online!"
+
+	def multiply(self, x, y):
+		sx = str(x)
+		sy str(y)
+		nx = len(sx)
+		ny = len(sy)
+		if nx==1 or ny==1:
+			r = int(x)*int(y)
+			return r
+		n = nx
+		if nx>ny:
+			sy = sy.rjust(nx, '0')
+			n = nx
+		elif ny>nx:
+			sx = sx.rjust(ny, '0')
+			n = ny
+		m = n % 2
+		offset = 0
+		even = n
+		if m!=0:
+			n+=1
+			offset = 1
+		floor = int(math.floor(n/2))-offset
+		ceil = int(math.ceil(n/2))-offset
+		a = sx[0:floor]
+		b = sx[ceil:n]
+		c = sy[0:floor]
+		d = sy[ceil:n]
+		r = ((10**n)*self.multiply(a,c)) + ((10**(n/2))*(self.multiply(a,d) + self.multiply(b,c))) + self.multiply(b,d)
+		return r
 
 
-start2 = timeit.default_timer()
-print int(x)*int(y)
-stop2 = timeit.default_timer()
-print stop2 - start2
+k = karatsuba();
+print k.multiply(3141592653589793238462643383279502884197169399375105820974944592,2718281828459045235360287471352662497757247093699959574966967627)
+print 3141592653589793238462643383279502884197169399375105820974944592*2718281828459045235360287471352662497757247093699959574966967627
 
-def karatuba(x,y):
-    n_x = len(x)
-    if n_x <= 1:
-        step1 = a * c
-        step2 = b * d
-        step3 = (a + b) * (c + d)
-        step4 = step3 - step2 - step1
-        step5 = step1 * 10 ** (n_x) + step4 * 10 ** (n_x / 2) + step2
-    else:
 
 
