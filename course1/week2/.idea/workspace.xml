@@ -18,8 +18,8 @@
       <file leaf-file-name="find_max_crossing_subarray.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/find_max_crossing_subarray.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
-              <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+            <state relative-caret-position="308">
+              <caret line="14" column="25" lean-forward="true" selection-start-line="14" selection-start-column="25" selection-end-line="14" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -43,9 +43,9 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="65" />
-    <option name="y" value="108" />
+    <option name="y" value="24" />
     <option name="width" value="1791" />
-    <option name="height" value="1148" />
+    <option name="height" value="1368" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -230,7 +230,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="108" width="1791" height="1148" extended-state="0" />
+    <frame x="65" y="24" width="1791" height="1368" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24958123" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -262,8 +262,8 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/find_max_crossing_subarray.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+        <state relative-caret-position="308">
+          <caret line="14" column="25" lean-forward="true" selection-start-line="14" selection-start-column="25" selection-end-line="14" selection-end-column="25" />
           <folding />
         </state>
       </provider>
