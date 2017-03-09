@@ -50,8 +50,8 @@
       <file leaf-file-name="merge_sort.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/merge_sort.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="10" column="11" lean-forward="true" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
+            <state relative-caret-position="495">
+              <caret line="34" column="35" lean-forward="false" selection-start-line="34" selection-start-column="9" selection-end-line="34" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -526,8 +526,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/merge_sort.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="10" column="11" lean-forward="true" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
+        <state relative-caret-position="495">
+          <caret line="34" column="35" lean-forward="false" selection-start-line="34" selection-start-column="9" selection-end-line="34" selection-end-column="35" />
           <folding />
         </state>
       </provider>
