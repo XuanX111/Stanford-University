@@ -18,52 +18,104 @@ c = square_matrix_mul(A,B)
 print c
 
 #Strassen's method
-def strassen(a, b, c, d, e, f, g, h):
-    p1 = a * (f - h)
-    p2 = (a + b) * h
-    p3 = (c + d) * e
-    p4 = d * (g - e)
-    p5 = (a + d) * (e + h)
-    p6 = (b - d) * (g + g)
-    p7 = (a - c) * (e + f)
+"""
+Strassen's sub-cubic matrix multiplication algorithm.  Scales as
+O(n^2.808).  Beging by considering 2x2 matrix multiplication:
+[a b].[e f] = [ae+bg  af+bh]
+[c d] [g h]   [ce+dg  cf+dh]
+Now it is the case that if you break a matrix into blocks and operate
+on the blocks that each of the blocks behaves the same way as the full
+matrix.  We can therefore treat this problem recursively by breaking
+the matrix down in factors of two.  Now, doing this the naive way
+results in O(n^3) behaviour as it requires 8 n/2 matrix
+multiplications per step.  Strassen's insight was that this can be
+performed with 7 multiplications (variables M1-M7 calculated below),
+and that these 7 quantities can be combined in different ways to
+reproduce the four quantities on the right-hand side of the equation
+above.
+"""
 
-    c11 = p5 + p6 - p2 + p6
-    c12 = p1 + p2
-    c21 = p3 + p4
-    c22 = p1 + p5 - p3 - p7
-
-    return np.matrix([[c11, c12], [c21, c22]])
+import numpy as np
+from math import ceil, log
 
 
-def matrix_multiplication_rec(a,b):
-    (r, c) = a.shape
-    C = np.zeros(r, c)
-    if r > 2 and c > 2:
+def strassen(A, B):
+    """
+    Pad arrays up to a power of two and call strassen_step to multiply
+    the arrays.
+    INPUT:  Two square 2d numpy arrays, A and B
+    OUTPUT: A single array containing A.B
+    """
+    # Pad up to a power of two:
+    n = A.shape[0]
+    next_power_of_2 = int(pow(2, ceil(log(n, 2))))
 
-        a = a[:r / 2, :c / 2]
-        b = a[:r / 2, c / 2:]
-        c = a[r / 2:, :r / 2]
-        d = a[r / 2:, c / 2:]
+    Apad = np.zeros((next_power_of_2, next_power_of_2))
+    Bpad = np.zeros((next_power_of_2, next_power_of_2))
 
-        e = b[:r / 2, :c / 2]
-        f = b[:r / 2, c / 2:]
-        g = b[r / 2:, :r / 2]
-        h = b[r / 2:, c / 2:]
+    Apad[0:n, 0:n] = A
+    Bpad[0:n, 0:n] = B
 
-        matrix_multiplication_rec(a,e)
-        matrix_multiplication_rec(b,f)
-        matrix_multiplication_rec(c,d)
-        matrix_multiplication_rec(d,h)
+    Cpad = strassen_step(Apad, Bpad)
 
-    for i in xrange(r):
-        for j in xrange(c):
-            C[r,c] = strassen(a,b,c,d,e,f,g,h)
-    return C
+    # Strip out the padding and return:
+    return Cpad[0:n, 0:n]
 
-A = np.matrix([[1,2],[3,4]])
-B = np.matrix([[5,6],[7,8]])
-c = square_matrix_mul(A,B)
-print c
 
+def strassen_step(A, B):
+    """Strassen's sub-cubic algorithm for matrix multiplication.
+    Perform one recursive step."""
+
+    n = A.shape[0]
+    if n == 1:
+        return A * B
+    else:
+        # Extract sub-matrices:
+        Anw = A[:n / 2, :n / 2]
+        Ane = A[:n / 2, n / 2:]
+        Asw = A[n / 2:, :n / 2]
+        Ase = A[n / 2:, n / 2:]
+        Bnw = B[:n / 2, :n / 2]
+        Bne = B[:n / 2, n / 2:]
+        Bsw = B[n / 2:, :n / 2]
+        Bse = B[n / 2:, n / 2:]
+
+        M1 = strassen(Anw + Ase, Bnw + Bse)
+        M2 = strassen(Asw + Ase, Bnw)
+        M3 = strassen(Anw, Bne - Bse)
+        M4 = strassen(Ase, Bsw - Bnw)
+        M5 = strassen(Anw + Ane, Bse)
+        M6 = strassen(Asw - Anw, Bnw + Bne)
+        M7 = strassen(Ane - Ase, Bsw + Bse)
+
+        Cnw = M1 + M4 - M5 + M7
+        Cne = M3 + M5
+        Csw = M2 + M4
+        Cse = M1 - M2 + M3 + M6
+
+        # Copy partial results back into C:
+        C = np.zeros((n, n))
+        C[:n / 2, :n / 2] = Cnw
+        C[:n / 2, n / 2:] = Cne
+        C[n / 2:, :n / 2] = Csw
+        C[n / 2:, n / 2:] = Cse
+
+        return C.astype(int)
+
+
+def test_strassen():
+    n_tests = 1
+    print "   --Testing strassen() with " + str(n_tests) + " tests"
+    for i in range(n_tests):
+        this_n = 1 + np.random.randint(4)  # size of matrix for this test
+        max_val = np.random.randint(5000)
+        A = np.random.randint(max_val, size=(this_n, this_n))
+        B = np.random.randint(max_val, size=(this_n, this_n))
+        np.testing.assert_array_equal(strassen(A, B), np.dot(A, B))
+    print "   --test_strassen() tests passed"
+
+
+if __name__ == "__main__":
+    test_strassen()
 
 
